@@ -64,11 +64,17 @@ const initialState : CounterState = {
 // }
 
 //  createReducer 로 리듀서 만들기
-const counter = createReducer<CounterState, CounterAction> (initialState, {
-    [INCREASE] : state => ({ count : state.count + 1 }),
-    [DECREASE] : state => ({ count : state.count - 1 }),
-    [INCREASE_BY] : (state, action) => ({ count : state.count + action.payload })
-});
+// const counter = createReducer<CounterState, CounterAction> (initialState, {
+//     [INCREASE] : state => ({ count : state.count + 1 }),
+//     [DECREASE] : state => ({ count : state.count - 1 }),
+//     [INCREASE_BY] : (state, action) => ({ count : state.count + action.payload })
+// });
+
+//  메소드 체이닝 방식으로 리듀서 구현하기
+const counter = createReducer<CounterState, CounterAction> (initialState)
+    .handleAction(increase, state => ({ count : state.count + 1 }))
+    .handleAction(decrease, state => ({ count : state.count - 1 }))
+    .handleAction(increaseBy, (state, action) => ({ count : state.count + action.payload }));
 
 
 export default counter;
